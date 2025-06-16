@@ -12,6 +12,7 @@ import org.springframework.context.annotation.*;
 @Import(value = {FooConfig.class, BarConfig.class, BooConfig.class})
 public class MyConfig {
 
+    // multiple beans with the same name but different profiles - ok
     @Bean("_bean1_") @Profile("foo")
     public Bean1 bean1_foo() {
 
@@ -28,7 +29,7 @@ public class MyConfig {
         return new Bean1("from boo");
     }
 
-    // multiple beans with the same name but opposite conditions
+    // multiple beans with the same name but opposite conditions - structure is incorrect
     @Bean(name = "_bean3_")
     @ConditionalOnProperty(name = "spring.profiles.active", havingValue = "foo")
     public Bean3 mybean31() {
@@ -44,6 +45,8 @@ public class MyConfig {
     public Bean3 mybean33() {
         return new Bean3("boo bean3");
     }
+
+    // multiple beans with different names and different profiles - ok
     @Bean @Profile("foo")
     public Bean2 bean2_foo() {
 
